@@ -16,7 +16,7 @@ document.write(today);
         
             // Get nearby values of the description in JQuery
             var stockName = $(this).siblings(".description").val();
-          var requestUrl = 'https://api.polygon.io/v1/open-close/'+stockName.toUpperCase()+'/'+today+'?adjusted=true&apiKey=x9aOGMvupupwhHuYUerXqh9LBf1gm1HN';
+          var requestUrl = 'https://api.polygon.io/v3/trades/'+stockName.toUpperCase()+'?adjusted=true&apiKey=x9aOGMvupupwhHuYUerXqh9LBf1gm1HN';
           
           fetch(requestUrl)
             .then(function (response) {
@@ -34,8 +34,8 @@ document.write(today);
 
               //Setting the text of the h3 element and p element.
               stockName.textContent = data.symbol +" "+ today;
-              stockOpen.textContent = "Open: "+data.open;
-              stockClose.textContent = "Close: "+data.close
+              stockOpen.textContent = "Open: "+data.results.price;
+              stockClose.textContent = "Close: ";
 
               //Appending the dynamically generated html to the div associated with the id="users"
               //Append will attach the element as the bottom most child.
