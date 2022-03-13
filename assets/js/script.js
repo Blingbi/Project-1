@@ -16,7 +16,7 @@ document.write(today);
         
             // Get nearby values of the description in JQuery
             var stockName = $(this).siblings(".description").val();
-          var requestUrl = 'https://api.polygon.io/v3/trades/'+stockName.toUpperCase()+'?adjusted=true&apiKey=x9aOGMvupupwhHuYUerXqh9LBf1gm1HN';
+          var requestUrl = 'https://api.polygon.io/v2/ticks/stocks/trades/'+stockName.toUpperCase()+'/'+today+'?adjusted=true&apiKey=x9aOGMvupupwhHuYUerXqh9LBf1gm1HN';
           
           fetch(requestUrl)
             .then(function (response) {
