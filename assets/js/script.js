@@ -47,15 +47,44 @@ $(document).ready(function (){
       })
     })
   
+  })
+ 
+  
+  $(".cryptoBtn").on("click", function () {
+    var cryptoName = $(this).siblings(".description").val();
+    targets.forEach( target => {
+      var dd = String(target.getDate()).padStart(2, '0');
+      var mm = String(target.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = today.getFullYear();
+      var dayTitle = yyyy + '-' + mm + '-' + dd;
+      var requestUrl = 'https://rest.coinapi.io/v1/exchangerate/'+cryptoName.toUpperCase()+'/USD?apiKey=C4D62BF3-1B0B-45D4-9A3F-48DC7D801132';
   
   
-  
-  
+  fetch(requestUrl)
+    .then(function (response) {
+      return response.json();
     })
-        
-    // Get nearby values of the description in JQuery
+    .then(function (data) {
+      //Using console.log to examine the data
+      console.log(data);
+      console.log(data);
+                
+        console.log("looping");
+        var cryptoName = document.createElement('h3');
+        var cryptoValue = document.createElement('p');
     
-  
+      //Setting the text of the h3 element and p element.
+      cryptoName.textContent = data.asset_id_base +" "+ today;
+      cryptoValue.textContent = "Current Value: "+data.rate;
+                
+    
+      //Appending the dynamically generated html to the div associated with the id="users"
+      //Append will attach the element as the bottom most child.
+      cryptoContainer.append(cryptoName);
+      cryptoContainer.append(cryptoValue);
+      })
+    })
+  })
 })
 
 
@@ -63,46 +92,10 @@ $(document).ready(function (){
 
 
 
-/*
-var dd = String(yesterday.getDate()).padStart(2, '0');
-var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-var yyyy = today.getFullYear();
-today = yyyy + '-' + mm + '-' + dd;
-oneWeek = yyyy+ '-' + mm + '-' + dd-7;
-document.write(today);
 
-    $(document).ready(function () {
-      
-      $(document).ready(function () {
-        $(".cryptoBtn").on("click", function () {
-          
-              // Get nearby values of the description in JQuery
-              var cryptoName = $(this).siblings(".description").val();
-            var requestUrl = 'https://rest.coinapi.io/v1/exchangerate/'+cryptoName.toUpperCase()+'/USD?apiKey=C4D62BF3-1B0B-45D4-9A3F-48DC7D801132';
-            fetch(requestUrl)
-              .then(function (response) {
-                return response.json();
-              })
-              .then(function (data) {
-                //Using console.log to examine the data
-                console.log(data);
-                console.log(data);
-              
-                  console.log("looping");
-                  var cryptoName = document.createElement('h3');
-                  var cryptoValue = document.createElement('p');
-  
-                //Setting the text of the h3 element and p element.
-                cryptoName.textContent = data.asset_id_base +" "+ today;
-                cryptoValue.textContent = "Current Value: "+data.rate;
-               
-  
-                //Appending the dynamically generated html to the div associated with the id="users"
-                //Append will attach the element as the bottom most child.
-                cryptoContainer.append(cryptoName);
-                cryptoContainer.append(cryptoValue);
-                })
-              })
-        })
 
-*/
+
+
+
+
+
