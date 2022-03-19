@@ -12,8 +12,13 @@
 <body>
 
   <body class="bpage">
-    <header class="text-center callout head">
+    <div class="title-bar callout head">
       <h1>Stock Market & Crypto Data</h1>
+      <div class="title-bar-right">
+        <button class="menu-icon" type="button" data-open="offCanvasRightPush">
+        </button>
+      </div>
+      </div>
     </header>
     <main class="grid-x align-spaced">
       <section class="cell small-5 cell small-5 grid-container align-center callout primary bigbox">
@@ -30,7 +35,7 @@
                 Save Selection
               </button>
             </div>
-            <div class="flex-column" id="stockData"></div>
+            <div class="flex-column stco" id="stockData"></div>
         </div>
       </section>
       <section class="bigbox cell small-5 grid-container align-center callout primary">
@@ -47,10 +52,38 @@
                 Save Selection
               </button>
             </div>
-            <div class="flex-column" id="cryptoData"></div>
+            <div class="flex-column stco" id="cryptoData"></div>
         </div>
       </section>
     </main>
+    <div class="off-canvas position-right" id="offCanvasRightPush" data-off-canvas data-transition="push">
+      <!-- Close button -->
+      <button class="close-button" aria-label="Close menu" type="button" data-close>
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <!-- Menu -->
+      <ul class="vertical menu grid-padding-x"> Stock Data
+        <li>
+          <div class="grid-x grid-padding-x">
+          <fieldset class="large-5 cell">
+            <legend>How many days would you like to show data for?</legend>
+            <input type="radio" name="days" value="7 days" id="7days" required><label for="7days">7 days</label><br>
+            <input type="radio" name="days" value="14 days" id="14days"><label for="14days">14 days</label><br>
+            <input type="radio" name="days" value="30 days" id="30days"><label for="30days">30 days</label><br>
+          </fieldset>
+        </li>
+      </ul>
+      <ul class="vertical menu grid-padding-x"> Crypto Data
+        <li>
+          <fieldset class="large-5 cell">
+          <legend>How many days would you like to show data for?</legend>
+          <input type="radio" name="days" value="7 days" id="7daysC" required><label for="7daysC">7 days</label><br>
+          <input type="radio" name="days" value="14 days" id="14daysC"><label for="14daysC">14 days</label><br>
+          <input type="radio" name="days" value="30 days" id="30daysC"><label for="30daysC">30 days</label><br>
+        </fieldset>
+      </li>
+      </ul>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script src="./assets/js/script.js"></script>
     <script src="./assets/js/vendor/jquery.js"></script>

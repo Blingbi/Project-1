@@ -9,7 +9,6 @@ var dd = String(yesterday.getDate()).padStart(2, '0');
 var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
 var yyyy = today.getFullYear();
 today = yyyy + '-' + mm + '-' + dd;
-document.write(today);
 
     $(document).ready(function () {
       $(".stockBtn").on("click", function () {

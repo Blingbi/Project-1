@@ -14,3 +14,10 @@
       border-width: 10px;
       border-color: black;
   }
+  .stco{
+    color: black;
+  }
+  .stco h3{
+      color: black;
+      font-size: medium;
+  }
