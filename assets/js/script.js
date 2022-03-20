@@ -1,4 +1,4 @@
-ar stockContainer = document.getElementById('stockData');
+var stockContainer = document.getElementById('stockData');
 var cryptoContainer =  document.getElementById('cryptoData')
 var fetchButton = document.getElementById('fetch-button');
 var today = new Date();
