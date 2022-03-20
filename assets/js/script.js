@@ -1,4 +1,4 @@
-var stockContainer = document.getElementById('stockData');
+ar stockContainer = document.getElementById('stockData');
 var cryptoContainer =  document.getElementById('cryptoData')
 var fetchButton = document.getElementById('fetch-button');
 var today = new Date();
@@ -13,9 +13,10 @@ const stockStorage= [];
 const cryptoStorage = [];
 const cryptoChartData = [];
 
+
       //Get stored stocks and reinitialize them
       $(document).ready(function () {
-        if (localStorage.getItem("storedStocks") != null) {
+        if (JSON.parse(localStorage.getItem("storedStocks")) != null) {
           var stocksNames = JSON.parse(localStorage.getItem("storedStocks"));
         for(var i = 0; i < stocksNames.length;i++){
           var savedStockName = stocksNames[i];
@@ -50,7 +51,7 @@ const cryptoChartData = [];
             })
             }
             }
-           }
+          }
           })
 
           //Get stored cryptos and reinitialize them
@@ -95,11 +96,11 @@ const cryptoChartData = [];
           var stockName = $(this).siblings(".description").val();
           var requestUrl = 'https://api.polygon.io/v2/aggs/ticker/'+stockName.toUpperCase()+'/prev?adjusted=true&apiKey=x9aOGMvupupwhHuYUerXqh9LBf1gm1HN';
           var stocksNames = JSON.parse(localStorage.getItem("storedStocks"))
-          for(var i = 0;i<=stocksNames.length;i++){
-          stockStorage.push(stocksNames[i])
-          }
+         
+         
           stockStorage.push(stockName.toUpperCase())
           localStorage.setItem("storedStocks", JSON.stringify(stockStorage))
+        
           fetch(requestUrl)
             .then(function (response) {
               return response.json();
@@ -123,7 +124,9 @@ const cryptoChartData = [];
               stockContainer.append(stockOpen);
               stockContainer.append(stockClose);
               })
+            
             })
+    
       })
       //Search and Save crypto Function
       $(document).ready(function () {
