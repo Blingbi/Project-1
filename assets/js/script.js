@@ -1,4 +1,6 @@
 $(document).ready(function (){
+  const stockchart = $('#stockchart');
+  const cryptochart = $('#cryptochart');
   var stockContainer = document.getElementById('stockData');
   var cryptoContainer =  document.getElementById('cryptoData')
   var fetchButton = document.getElementById('fetch-button');
@@ -12,6 +14,36 @@ $(document).ready(function (){
   var targets = [yesterday,lastWeek,twoWeeks]
   
   $(".stockBtn").on("click", function () {
+    const myChart = new Chart(stockchart, {
+      type: 'bar',
+      data: {
+          labels: ['twoWeeks', 'lastWeek', 'today'],
+          datasets: [{
+              label: 'stockValue',
+              data: [],
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)'
+                  
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)'
+                
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          scales: {
+              y: {
+                  beginAtZero: true
+              }
+          }
+      }
+  });
     var stockName = $(this).siblings(".description").val();
     targets.forEach(target =>{
       var dd = String(target.getDate()).padStart(2, '0');
@@ -51,6 +83,36 @@ $(document).ready(function (){
  
   
   $(".cryptoBtn").on("click", function () {
+    const mycryptoChart = new Chart(cryptochart, {
+      type: 'bar',
+      data: {
+          labels: ['twoWeeks', 'lastWeek', 'today'],
+          datasets: [{
+              label: 'stockValue',
+              data: [],
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)'
+                  
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)'
+                
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          scales: {
+              y: {
+                  beginAtZero: true
+              }
+          }
+      }
+  });
     var cryptoName = $(this).siblings(".description").val();
     targets.forEach( target => {
       var dd = String(target.getDate()).padStart(2, '0');
