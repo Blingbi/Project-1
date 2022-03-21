@@ -64,13 +64,8 @@
       <!-- Menu -->
       <ul class="vertical menu grid-padding-x"> Stock Data
         <li>
-          <div class="grid-x grid-padding-x">
-          <fieldset class="large-5 cell">
-            <legend>How many days would you like to show data for?</legend>
-            <input type="radio" name="days" value="7 days" id="7days" required><label for="7days">7 days</label><br>
-            <input type="radio" name="days" value="14 days" id="14days"><label for="14days">14 days</label><br>
-            <input type="radio" name="days" value="30 days" id="30days"><label for="30days">30 days</label><br>
-          </fieldset>
+          <label for="date">Choose Your Date:</label>
+          <input type="date" id="date" name="date">
         </li>
       </ul>
       <ul class="vertical menu grid-padding-x"> Crypto Data
@@ -83,12 +78,13 @@
         </fieldset>
       </li>
       </ul>
+      <button class="button success clearBtn alert" id="fetch-button">Clear Stored Data</button>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script src="./assets/js/script.js"></script>
     <script src="./assets/js/vendor/jquery.js"></script>
     <script src="./assets/js/vendor/what-input.js"></script>
     <script src="./assets/js/vendor/foundation.js"></script>
     <script src="./assets/js/app.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
   </body>
 </html>
