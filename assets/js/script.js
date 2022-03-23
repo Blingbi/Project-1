@@ -36,7 +36,6 @@ $(document).ready(function () {
             var stockName = document.createElement("h3");
             var stockOpen = document.createElement("p");
             var stockClose = document.createElement("p");
-
             //Setting the text of the h3 element and p element.
             if (data.results[0].T != null) {
               stockName.textContent = data.results[0].T;
