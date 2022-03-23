@@ -21,7 +21,10 @@ body {
 
 h1 {
   font-size: 2em;
-  margin: 0.67em 0; }
+
+  margin: 0.67em 0; 
+  color: #00FF00	;
+}
 
 hr {
   -webkit-box-sizing: content-box;
@@ -2178,7 +2181,8 @@ blockquote,
 th,
 td {
   margin: 0;
-  padding: 0; }
+  padding: 0; 
+}
 
 p {
   margin-bottom: 1rem;
@@ -2224,7 +2228,8 @@ h1, .h1 {
   font-size: 1.5rem;
   line-height: 1.4;
   margin-top: 0;
-  margin-bottom: 0.5rem; }
+  margin-bottom: 0.5rem;
+  color: #00FF00	; }
 
 h2, .h2 {
   font-size: 1.25rem;
@@ -3400,7 +3405,7 @@ select {
   .callout > :last-child {
     margin-bottom: 0; }
   .callout.primary {
-    background-color: #d7ecfa;
+    background-color: #808080;
     color: #0a0a0a; }
   .callout.secondary {
     background-color: #eaeaea;
