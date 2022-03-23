@@ -1,154 +1,245 @@
-$(document).ready(function (){
-  const stockchart = $('#stockchart');
-  const cryptochart = $('#cryptochart');
-  var stockContainer = document.getElementById('stockData');
-  var cryptoContainer =  document.getElementById('cryptoData')
-  var fetchButton = document.getElementById('fetch-button');
-  var today = new Date();
-  var yesterday = new Date();
-  yesterday.setDate(yesterday.getDate()-1)
-  var lastWeek = new Date();
-  lastWeek.setDate(today.getDate()-7);
-  var twoWeeks= new Date()
-  twoWeeks.setDate(today.getDate()-14)
-  var targets = [yesterday,lastWeek,twoWeeks]
-  
-  $(".stockBtn").on("click", function () {
-    const myChart = new Chart(stockchart, {
-      type: 'bar',
-      data: {
-          labels: ['twoWeeks', 'lastWeek', 'today'],
-          datasets: [{
-              label: 'stockValue',
-              data: [],
-              backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 206, 86, 0.2)'
-                  
-              ],
-              borderColor: [
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)'
-                
-              ],
-              borderWidth: 1
-          }]
-      },
-      options: {
-          scales: {
-              y: {
-                  beginAtZero: true
-              }
-          }
+//Creat variables that will allow application to work
+var stockContainer = document.getElementById("stockData");
+var cryptoContainer = document.getElementById("cryptoData");
+var chartContainer = document.getElementById("chartSection");
+var fetchButton = document.getElementById("fetch-button");
+var today = new Date();
+var yesterday = new Date(today);
+yesterday.setDate(yesterday.getDate() - 1);
+var dd = String(yesterday.getDate()).padStart(2, "0");
+var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+var yyyy = today.getFullYear();
+today = yyyy + "-" + mm + "-" + dd;
+document.write(today);
+const stockStorage = [];
+const cryptoStorage = [];
+const cryptoChartData = [];
+
+//Get stored stocks and reinitialize them
+$(document).ready(function () {
+  if (JSON.parse(localStorage.getItem("storedStocks")) != null) {//created function to receive stock data from api
+    var stocksNames = JSON.parse(localStorage.getItem("storedStocks"));
+    for (var i = 0; i < stocksNames.length; i++) {
+      var savedStockName = stocksNames[i];
+      if (savedStockName != null) {
+        var requestUrl =
+          "https://api.polygon.io/v2/aggs/ticker/" +// api code for stock
+          savedStockName.toUpperCase() +
+          "/prev?adjusted=true&apiKey=x9aOGMvupupwhHuYUerXqh9LBf1gm1HN";
+        console.log(requestUrl);
+        fetch(requestUrl)
+          .then(function (response) {// calling for data
+            return response.json();
+          })
+          .then(function (data) {
+            console.log(data);
+
+            var stockName = document.createElement("h3");
+            var stockOpen = document.createElement("p");
+            var stockClose = document.createElement("p");
+            //Setting the text of the h3 element and p element.
+            if (data.results[0].T != null) {
+              stockName.textContent = data.results[0].T;
+              stockOpen.textContent = "Open: " + data.results[0].o;
+              stockClose.textContent = "Close: " + data.results[0].c;
+
+              //Appending the dynamically generated html to the div associated with the id="users"
+              //Append will attach the element as the bottom most child.
+              stockContainer.append(stockName);
+              stockContainer.append(stockOpen);
+              stockContainer.append(stockClose);
+            }
+          });
       }
-  });
+    }
+  }
+});
+
+//Get stored cryptos and reinitialize them
+$(document).ready(function () {
+  if (localStorage.getItem("storedCrypto") != null) { //created function to receive crypto data from api
+    var savedCrypto = JSON.parse(localStorage.getItem("storedCrypto"));
+    for (var i = 0; i < savedCrypto.length; i++) {
+      var cryptoNames = savedCrypto[i];
+      if (cryptoNames != null) {
+        var requestUrl =
+          "https://rest.coinapi.io/v1/exchangerate/" +// crypto api 
+          cryptoNames.toUpperCase() +
+          "/USD/?apiKey=76534041-EF29-40D8-AC91-75939BEF8C76";
+        fetch(requestUrl)
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            var cryptoName = document.createElement("h3");
+            var cryptoValue = document.createElement("p");
+
+            //Setting the text of the h3 element and p element.
+            if (data.asset_id_base != null) {
+              cryptoName.textContent = data.asset_id_base;
+              cryptoValue.textContent = "Current Value: " + data.rate;
+
+              //Appending the dynamically generated html to the div associated with the id="users"
+              //Append will attach the element as the bottom most child.
+              cryptoContainer.append(cryptoName);
+              cryptoContainer.append(cryptoValue);
+            }
+          });
+      }
+    }
+  }
+});
+//Search and save stock function
+$(document).ready(function () {
+  $(".stockBtn").on("click", function () {// api code
+    // Get nearby values of the description in JQuery
     var stockName = $(this).siblings(".description").val();
-    targets.forEach(target =>{
-      var dd = String(target.getDate()).padStart(2, '0');
-      var mm = String(target.getMonth() + 1).padStart(2, '0'); //January is 0!
-      var yyyy = target.getFullYear();
-      var dayTitle = yyyy + '-' + mm + '-' + dd;
-      var requestUrl = 'https://api.polygon.io/v1/open-close/'+stockName.toUpperCase()+'/'+dayTitle+'?adjusted=true&apiKey=x9aOGMvupupwhHuYUerXqh9LBf1gm1HN';
-  
-  fetch(requestUrl)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      //Using console.log to examine the data
-      console.log(data);
-      console.log(data);
-    
-        console.log("looping");
-        var stockName = document.createElement('h3');
-        var stockOpen = document.createElement('p');
-        var stockClose = document.createElement('p')
+    var requestUrl =
+      "https://api.polygon.io/v2/aggs/ticker/" +//starts call for current stocks
+      stockName.toUpperCase() +
+      "/prev?adjusted=true&apiKey=x9aOGMvupupwhHuYUerXqh9LBf1gm1HN";
+    var stocksNames = JSON.parse(localStorage.getItem("storedStocks"));
 
-      //Setting the text of the h3 element and p element.
-      stockName.textContent = data.symbol +" "+ today;
-      stockOpen.textContent = "Open: "+data.open;
-      stockClose.textContent = "Close: "+data.close
+    stockStorage.push(stockName.toUpperCase());
+    localStorage.setItem("storedStocks", JSON.stringify(stockStorage));
 
-      //Appending the dynamically generated html to the div associated with the id="users"
-      //Append will attach the element as the bottom most child.
-      stockContainer.append(stockName);
-      stockContainer.append(stockOpen);
-      stockContainer.append(stockClose);
+    fetch(requestUrl)
+      .then(function (response) {// using moment to call data
+        return response.json();
       })
-    })
-  
-  })
- 
-  
-  $(".cryptoBtn").on("click", function () {
-    const mycryptoChart = new Chart(cryptochart, {
-      type: 'bar',
-      data: {
-          labels: ['twoWeeks', 'lastWeek', 'today'],
-          datasets: [{
-              label: 'stockValue',
-              data: [],
-              backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 206, 86, 0.2)'
-                  
-              ],
-              borderColor: [
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)'
-                
-              ],
-              borderWidth: 1
-          }]
-      },
-      options: {
-          scales: {
-              y: {
-                  beginAtZero: true
-              }
-          }
-      }
+      .then(function (data) {
+        //Using console.log to examine the data
+        console.log(data);
+
+        var stockName = document.createElement("h3");
+        var stockOpen = document.createElement("p");
+        var stockClose = document.createElement("p");
+
+        //Setting the text of the h3 element and p element.
+        stockName.textContent = data.results[0].T;
+        stockOpen.textContent = "Open: " + data.results[0].o;
+        stockClose.textContent = "Close: " + data.results[0].c;
+
+        //Appending the dynamically generated html to the div associated with the id="users"
+        //Append will attach the element as the bottom most child.
+        stockContainer.append(stockName);
+        stockContainer.append(stockOpen);
+        stockContainer.append(stockClose);
+      });
   });
+});
+$(document).ready(function () {
+  $(".cryptoBtn").on("click", function () {
+    // Get nearby values
+    var cryptoSymbol = $(this).siblings(".description").val();
+    var requestUrl =
+      "https://rest.coinapi.io/v1/exchangerate/" +
+      cryptoSymbol.toUpperCase() +
+      "/USD/?apiKey=76534041-EF29-40D8-AC91-75939BEF8C76";
+    localStorage.setItem("storedCrypto", JSON.stringify(""));
+    var cryptoNames = JSON.parse(localStorage.getItem("storedCrypto"));
+    for (var i = 0; i <= cryptoNames.length; i++) {
+      cryptoStorage.push(cryptoNames[i]);
+    }
+    cryptoStorage.push(cryptoSymbol.toUpperCase());
+    localStorage.setItem("storedCrypto", JSON.stringify(cryptoStorage));
+    fetch(requestUrl)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        //Using console.log to examine the data
+        console.log(data);
+
+        var cryptoName = document.createElement("h3");
+        var cryptoValue = document.createElement("p");
+
+        //Setting the text of the h3 element and p element.
+
+        cryptoName.textContent = cryptoSymbol.toUpperCase();
+        cryptoValue.textContent = "Current Value: " + data.rate;
+
+        //Appending the dynamically generated html to the div associated with the id="users"
+        //Append will attach the element as the bottom most child.
+
+        cryptoContainer.append(cryptoName);
+        cryptoContainer.append(cryptoValue);
+      });
+  });
+});
+//Search and Save crypto Function
+$(document).ready(function () {
+  $(".cryptoBtn").on("click", function () {
+    var oneMonth = new Date();
+    var dd = String(oneMonth.getDate() - 1).padStart(2, "0");
+    var mm = String(oneMonth.getMonth()).padStart(2, "0");
+    var yyyy = oneMonth.getFullYear();
+    oneMonth = yyyy + "-" + mm + "-" + dd;
     var cryptoName = $(this).siblings(".description").val();
-    targets.forEach( target => {
-      var dd = String(target.getDate()).padStart(2, '0');
-      var mm = String(target.getMonth() + 1).padStart(2, '0'); //January is 0!
-      var yyyy = today.getFullYear();
-      var dayTitle = yyyy + '-' + mm + '-' + dd;
-      var requestUrl = 'https://rest.coinapi.io/v1/exchangerate/'+cryptoName.toUpperCase()+'/USD?apiKey=C4D62BF3-1B0B-45D4-9A3F-48DC7D801132';
-  
-  
+    var thisCryptoBtn = this;
+    cryptoName.textContent = cryptoName.toUpperCase();
+    var requestUrl =// retreating information regarding crypto prices from now till one month
+      "https://rest.coinapi.io/v1/exchangerate/" +
+      cryptoName.toUpperCase() +
+      "/USD/history?period_id=1DAY&time_start=" +
+      oneMonth +
+      "T00:00:00&time_end=" +
+      today +
+      "T00:00:00&apiKey=C4D62BF3-1B0B-45D4-9A3F-48DC7D801132";
+    fetch(requestUrl)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        for (var i = 0; i < data.length; i++) {
+          cryptoChartData.push(data[i].rate_high);
+          console.log(cryptoChartData);
+        }
+        cryptoChartData.splice(0, 29);
+        addChart(thisCryptoBtn);
+        mycryptoChart.update();
+      });
+  });
+});
+//Search and Save crypto Function
+function addChart(thisCryptoBtn) {// adding chart
+  var oneMonth = new Date();
+  var dd = String(oneMonth.getDate() - 1).padStart(2, "0");
+  var mm = String(oneMonth.getMonth()).padStart(2, "0");
+  var yyyy = oneMonth.getFullYear();
+  oneMonth = yyyy + "-" + mm + "-" + dd;
+  var cryptoName = $(thisCryptoBtn).siblings(".description").val();
+  console.log("name here", cryptoName);
+  //cryptoName.textContent = cryptoName.toUpperCase();
+  var requestUrl =// charting values for crypto 
+    "https://rest.coinapi.io/v1/exchangerate/" +
+    cryptoName.toUpperCase() +
+    "/USD/history?period_id=1DAY&time_start=" +
+    oneMonth +
+    "T00:00:00&time_end=" +
+    today +
+    "T00:00:00&apiKey=C4D62BF3-1B0B-45D4-9A3F-48DC7D801132";
   fetch(requestUrl)
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
-      //Using console.log to examine the data
-      console.log(data);
-      console.log(data);
-                
-        console.log("looping");
-        var cryptoName = document.createElement('h3');
-        var cryptoValue = document.createElement('p');
-    
-      //Setting the text of the h3 element and p element.
-      cryptoName.textContent = data.asset_id_base +" "+ today;
-      cryptoValue.textContent = "Current Value: "+data.rate;
-                
-    
-      //Appending the dynamically generated html to the div associated with the id="users"
-      //Append will attach the element as the bottom most child.
-      cryptoContainer.append(cryptoName);
-      cryptoContainer.append(cryptoValue);
-      })
-    })
-  })
-})
+      for (var i = 0; i < data.length; i++) {
+        cryptoChartData.push(data[i].rate_high);
+        console.log("add chart data", cryptoChartData);
+      }
+      console.log("add chart update");
+      mycryptoChart.update();
+      cryptoChartData.length = 0;
+    });
 
+  return cryptoChartData;
+}
+
+//clear all the local storage
+$(".clearBtn").on("click", function () {
+  localStorage.clear();
+});
 
 
 
