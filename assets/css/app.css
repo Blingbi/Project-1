@@ -32,3 +32,14 @@
       color: black;
       font-size: medium;
   }
+  .sidemenu{
+      padding: 15px;
+      background-color: #404040;
+      color: #00FF00;
+  }
+.sidelabel{
+    color: #00FF00;
+}
+.para{
+    color:red
+}

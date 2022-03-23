@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="./assets/css/app.css">
   </head>
 <body>
-
+<!--Title Header and side menu bar-->
   <body class="bpage">
     <div class="title-bar callout head">
       <h1>Stock Market & Crypto Data</h1>
@@ -20,7 +20,9 @@
       </div>
       </div>
     </header>
+    <!-- Container for the Stock, crypto and chart containers-->
     <main class="grid-x align-spaced">
+      <!--Stock container-->
       <section class="cell small-5 cell small-5 grid-container align-center callout primary bigbox">
         <header class="text-center">
           <h2 class="text-white">
@@ -38,6 +40,7 @@
             <div class="flex-column stco" id="stockData"></div>
         </div>
       </section>
+      <!--Crypto container-->
       <section class="bigbox cell small-5 grid-container align-center callout primary">
         <header class="text-center">
           <h2 class="">
@@ -46,49 +49,57 @@
         </header>
         <div class="grid-container align-center">
           <label class="grid-x align-spaced"> Please select your cryptocurrency</label>
-          <div id="cryptoData" class="grid-x align align-spaced">
+          <div class="grid-x align align-spaced">
             <input type="text" placeholder="Crypto Symbol" class="description cell small-5">
             <button class="button success cryptoBtn cell small-6" id="fetch-button">
                 Save Selection
               </button>
             </div>
-        </div>
+            <div class="flex-column stco" id="cryptoData"></div>    
+           </div>
       </section>
+      <!--Chart data container-->
       <section class="bigbox cell small-5 grid-container align-center callout primary">
         <header class="text-center">
           <h2 class="">
-            Chart
+            Crpto Data Chart
           </h2>
         </header>
         <div class="grid-container align-center">
-          <label class="grid-x align-spaced"> Please select your cryptocurrency</label>
+          <label class="grid-x align-spaced"> Time VS Crypto Value </label>
           <canvas id="cryptoChart" responsive="true"></canvas>
           <div id="chartSection" class="grid-x align align-spaced">
       </section>
     </main>
-    <div class="off-canvas position-right" id="offCanvasRightPush" data-off-canvas data-transition="push">
+    <!-- Side menu div-->
+    <div class="off-canvas position-right sidemenu" id="offCanvasRightPush" data-off-canvas data-transition="push">
       <!-- Close button -->
       <button class="close-button" aria-label="Close menu" type="button" data-close>
         <span aria-hidden="true">&times;</span>
       </button>
       <!-- Menu -->
-      <ul class="vertical menu grid-padding-x"> Stock Data
+      <div class="">
+        <div class="">
+      <ul class="vertical menu grid-padding-x"><h3>Stock Data</h3> 
         <li>
-          <label for="date">Choose Your Date:</label>
+          <label class="sidelabel" for="date">Choose Your Date:</label>
           <input type="date" id="date" name="date">
         </li>
       </ul>
-      <ul class="vertical menu grid-padding-x"> Crypto Data
+    </div>
+      <ul class="vertical menu grid-padding-x"> <h3>Crypto Data</h3> 
         <li>
           <fieldset class="large-5 cell">
-          <legend>How many days would you like to show data for?</legend>
-          <input type="radio" name="days" value="7 days" id="7daysC" required><label for="7daysC">7 days</label><br>
-          <input type="radio" name="days" value="14 days" id="14daysC"><label for="14daysC">14 days</label><br>
-          <input type="radio" name="days" value="30 days" id="30daysC"><label for="30daysC">30 days</label><br>
+          <legend class="sidelabel">How many days would you like to show data for?</legend>
+          <input type="radio" name="days" value="7 days" id="7daysC" required><label class="sidelabel" for="7daysC">7 days</label><br>
+          <input type="radio" name="days" value="14 days" id="14daysC"><label class="sidelabel" for="14daysC">14 days</label><br>
+          <input type="radio" name="days" value="30 days" id="30daysC"><label class="sidelabel" for="30daysC">30 days</label><br>
         </fieldset>
       </li>
       </ul>
+      <p class="para">Alert: Functionality for the crypto date buttons will be added at a later release</p>
       <button class="button success clearBtn alert" id="fetch-button">Clear Stored Data</button>
+    </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script src="./assets/js/script.js"></script>
