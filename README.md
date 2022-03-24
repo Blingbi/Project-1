@@ -11,7 +11,7 @@ Designed with
 Webpage file
 https://github.com/Blingbi/Stock-CryptoWatcher
 
-Edits made by Markeice Green, Konner Bainbridge , Colin Christoph
+Edits made by Markeice Green, Konner Bainbridge , Colin Christoph, Wade Skrimager
 
 MIT License
 
