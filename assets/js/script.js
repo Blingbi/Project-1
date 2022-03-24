@@ -126,9 +126,8 @@ $(document).ready(function () {
         if(pickedDate != ""){
           stockOpen.textContent = "Open: " + data.open;
           stockClose.textContent = "Close: " + data.close;
-          stockName.textContent = data.symbol;
-          stockdate.textContent = pickedDate
-          stockClose.append(stockdate)
+          stockName.textContent = data.symbol + " " + pickedDate;
+        
         }
         else{
           stockOpen.textContent = "Open: " + data.results[0].o;
