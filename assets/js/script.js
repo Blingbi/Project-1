@@ -8,17 +8,13 @@ yesterday.setDate(yesterday.getDate() - 1);
 var dd = String(yesterday.getDate()).padStart(2, "0");
 var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
 var yyyy = today.getFullYear();
-var pickedDate = ""
+var pickedDate 
 today = yyyy + "-" + mm + "-" + dd;
-document.write(today);
 const stockStorage = [];
 const cryptoStorage = [];
 const cryptoChartData = [];
-$(document).ready(function () {
-  $(".saveDate").on("click", function () {
-  pickedDate = document.getElementById("date").Value();
-    })
-  })
+
+
 //Get stored stocks and reinitialize them
 $(document).ready(function () {
   if (JSON.parse(localStorage.getItem("storedStocks")) != null) {
@@ -98,8 +94,9 @@ $(document).ready(function () {
   $(".stockBtn").on("click", function () {
     // Get nearby values of the description in JQuery
     var stockName = $(this).siblings(".description").val();
+    console.log(pickedDate);
     if(pickedDate != ""){
-     var requestUrl = "https://api.polygon.io/v1/open-close/"+stockName+"/"+pickedDate+"?adjusted=true&apiKey=x9aOGMvupupwhHuYUerXqh9LBf1gm1HN"
+     var requestUrl = "https://api.polygon.io/v1/open-close/"+stockName.toUpperCase()+"/"+pickedDate+"?adjusted=true&apiKey=x9aOGMvupupwhHuYUerXqh9LBf1gm1HN"
     }
     else{
     var requestUrl =
@@ -123,17 +120,28 @@ $(document).ready(function () {
         var stockName = document.createElement("h3");
         var stockOpen = document.createElement("p");
         var stockClose = document.createElement("p");
+        var stockdate = document.createElement("p");
 
         //Setting the text of the h3 element and p element.
-        stockName.textContent = data.results[0].T;
-        stockOpen.textContent = "Open: " + data.results[0].o;
+        if(pickedDate != ""){
+          stockOpen.textContent = "Open: " + data.open;
+          stockClose.textContent = "Close: " + data.close;
+          stockName.textContent = data.symbol;
+          stockdate.textContent = pickedDate
+          stockClose.append(stockdate)
+        }
+        else{
+          stockOpen.textContent = "Open: " + data.results[0].o;
         stockClose.textContent = "Close: " + data.results[0].c;
-
+        stockName.textContent = data.results[0].T;
+        }
+        
         //Appending the dynamically generated html to the div associated with the id="users"
         //Append will attach the element as the bottom most child.
         stockContainer.append(stockName);
         stockContainer.append(stockOpen);
         stockContainer.append(stockClose);
+        
       });
   });
 });
@@ -248,3 +256,9 @@ function addChart(thisCryptoBtn) {
 $(".clearBtn").on("click", function () {
   localStorage.clear();
 });
+
+$(document).ready(function () {
+  $("#pickDate").on("click", function () {
+    pickedDate = document.getElementById("date").value;
+    })
+  });
