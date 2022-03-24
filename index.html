@@ -83,7 +83,10 @@
       <ul class="vertical menu grid-padding-x"><h3>Stock Data</h3> 
         <li>
           <label class="sidelabel" for="date">Choose Your Date:</label>
-          <input type="date" id="date" name="date">
+          <div class="grid-x">
+          <input class="cell small-9" type="date" id="date" name="date" value="2022-03-23" required pattern="\d{4}-\d{2}-\d{2}">
+          <button class="button success boot small-3" id="saveDate">Save</button>
+          </div>
         </li>
       </ul>
     </div>
