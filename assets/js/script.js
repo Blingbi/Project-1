@@ -8,12 +8,17 @@ yesterday.setDate(yesterday.getDate() - 1);
 var dd = String(yesterday.getDate()).padStart(2, "0");
 var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
 var yyyy = today.getFullYear();
+var pickedDate = ""
 today = yyyy + "-" + mm + "-" + dd;
 document.write(today);
 const stockStorage = [];
 const cryptoStorage = [];
 const cryptoChartData = [];
-
+$(document).ready(function () {
+  $(".saveDate").on("click", function () {
+  pickedDate = document.getElementById("date").Value();
+    })
+  })
 //Get stored stocks and reinitialize them
 $(document).ready(function () {
   if (JSON.parse(localStorage.getItem("storedStocks")) != null) {
@@ -32,10 +37,10 @@ $(document).ready(function () {
           })
           .then(function (data) {
             console.log(data);
-
             var stockName = document.createElement("h3");
             var stockOpen = document.createElement("p");
             var stockClose = document.createElement("p");
+
             //Setting the text of the h3 element and p element.
             if (data.results[0].T != null) {
               stockName.textContent = data.results[0].T;
@@ -93,10 +98,16 @@ $(document).ready(function () {
   $(".stockBtn").on("click", function () {
     // Get nearby values of the description in JQuery
     var stockName = $(this).siblings(".description").val();
+    if(pickedDate != ""){
+     var requestUrl = "https://api.polygon.io/v1/open-close/"+stockName+"/"+pickedDate+"?adjusted=true&apiKey=x9aOGMvupupwhHuYUerXqh9LBf1gm1HN"
+    }
+    else{
     var requestUrl =
       "https://api.polygon.io/v2/aggs/ticker/" +
       stockName.toUpperCase() +
       "/prev?adjusted=true&apiKey=x9aOGMvupupwhHuYUerXqh9LBf1gm1HN";
+    }
+   
     var stocksNames = JSON.parse(localStorage.getItem("storedStocks"));
 
     stockStorage.push(stockName.toUpperCase());
@@ -109,7 +120,6 @@ $(document).ready(function () {
       .then(function (data) {
         //Using console.log to examine the data
         console.log(data);
-
         var stockName = document.createElement("h3");
         var stockOpen = document.createElement("p");
         var stockClose = document.createElement("p");

@@ -17,15 +17,14 @@ html {
   -webkit-text-size-adjust: 100%; }
 
 body {
+ 
   margin: 0; }
 
 h1 {
   font-size: 2em;
-
   margin: 0.67em 0; 
   color: #00FF00	;
 }
-
 hr {
   -webkit-box-sizing: content-box;
           box-sizing: content-box;
@@ -2183,7 +2182,6 @@ td {
   margin: 0;
   padding: 0; 
 }
-
 p {
   margin-bottom: 1rem;
   font-size: inherit;
