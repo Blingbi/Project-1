@@ -1,0 +1,149 @@
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock and Crypto Watcher</title>
+    <link rel="stylesheet" href="./assets/css/foundation.css">
+    <link rel="stylesheet" href="./assets/css/app.css">
+  </head>
+<body>
+<!--Title Header and side menu bar-->
+  <body class="bpage">
+    <div class="title-bar callout head">
+      <h1>Stock Market & Crypto Data</h1>
+      <div class="title-bar-right">
+        <button class="menu-icon" type="button" data-open="offCanvasRightPush">
+        </button>
+      </div>
+      </div>
+    </header>
+    <!-- Container for the Stock, crypto and chart containers-->
+    <main class="grid-x align-spaced">
+      <!--Stock container-->
+      <section class="cell small-5 cell small-5 grid-container align-center callout primary bigbox">
+        <header class="text-center">
+          <h2 class="text-white">
+            Stocks
+          </h2>
+        </header>
+        <div class="grid-container align-center">
+          <label class="grid-x align-spaced"> Please select your stock</label>
+          <div class="grid-x align align-spaced">
+            <input type="text" placeholder="Stock Symbol" class="description cell small-5">
+            <button class="button success stockBtn cell small-6" id="fetch-button">
+                Save Selection
+              </button>
+            </div>
+            <div class="flex-column stco" id="stockData"></div>
+        </div>
+      </section>
+      <!--Crypto container-->
+      <section class="bigbox cell small-5 grid-container align-center callout primary">
+        <header class="text-center">
+          <h2 class="">
+            Crypto 
+          </h2>
+        </header>
+        <div class="grid-container align-center">
+          <label class="grid-x align-spaced"> Please select your cryptocurrency</label>
+          <div class="grid-x align align-spaced">
+            <input type="text" placeholder="Crypto Symbol" class="description cell small-5">
+            <button class="button success cryptoBtn cell small-6" id="fetch-button">
+                Save Selection
+              </button>
+            </div>
+            <div class="flex-column stco" id="cryptoData"></div>    
+           </div>
+      </section>
+      <!--Chart data container-->
+      <section class="bigbox cell small-5 grid-container align-center callout primary">
+        <header class="text-center">
+          <h2 class="">
+            Crypto Data Chart
+          </h2>
+        </header>
+        <div class="grid-container align-center">
+          <label class="grid-x align-spaced"> Time VS Crypto Value </label>
+          <canvas id="cryptoChart" responsive="true"></canvas>
+          <div id="chartSection" class="grid-x align align-spaced">
+      </section>
+    </main>
+    <!-- Side menu div-->
+    <div class="off-canvas position-right sidemenu" id="offCanvasRightPush" data-off-canvas data-transition="push">
+      <!-- Close button -->
+      <button class="close-button" aria-label="Close menu" type="button" data-close>
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <!-- Menu -->
+      <div class="">
+        <div class="">
+      <ul class="vertical menu grid-padding-x"><h3>Stock Data</h3> 
+        <li>
+          <label class="sidelabel" for="date">Choose Your Date:</label>
+          <div class="grid-x">
+          <input class="cell small-9" type="date" id="date" name="date" required pattern="\d{4}-\d{2}-\d{2}">
+          <button class="button success boot small-3" id="pickDate">Save</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+      <ul class="vertical menu grid-padding-x"> <h3>Crypto Data</h3> 
+        <li>
+          <fieldset class="large-5 cell">
+          <legend class="sidelabel">How many days would you like to show data for?</legend>
+          <input type="radio" name="days" value="7 days" id="7daysC" required><label class="sidelabel" for="7daysC">7 days</label><br>
+          <input type="radio" name="days" value="14 days" id="14daysC"><label class="sidelabel" for="14daysC">14 days</label><br>
+          <input type="radio" name="days" value="30 days" id="30daysC"><label class="sidelabel" for="30daysC">30 days</label><br>
+        </fieldset>
+      </li>
+      </ul>
+      <p class="para">Alert: Functionality for the crypto date buttons will be added at a later release</p>
+      <button class="button success clearBtn alert" id="fetch-button">Clear Stored Data</button>
+    </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="./assets/js/script.js"></script>
+    <script src="./assets/js/vendor/jquery.js"></script>
+    <script src="./assets/js/vendor/what-input.js"></script>
+    <script src="./assets/js/vendor/foundation.js"></script>
+    <script src="./assets/js/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+       const ctx = document.getElementById('cryptoChart')
+        const mycryptoChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+              labels: ['1 Day','3 Days','7 Days','14 Days','21 Days', '28 Days'],
+              datasets: [{
+                  label: 'Past 28 Days',
+                  data: cryptoChartData,
+                  backgroundColor: [
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)'
+                      
+                  ],
+                  borderColor: [
+                      'rgba(255, 99, 132, 1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(255, 206, 86, 1)'
+                    
+                  ],
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      });
+
+
+    </script>
+  </body>
+</html>
