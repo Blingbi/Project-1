@@ -123,16 +123,16 @@ $(document).ready(function () {
         var stockdate = document.createElement("p");
 
         //Setting the text of the h3 element and p element.
-        if(pickedDate != null){
-          stockOpen.textContent = "Open: " + data.open;
-          stockClose.textContent = "Close: " + data.close;
-          stockName.textContent = data.symbol + " " + pickedDate;
+        if(pickedDate === null){
+        stockOpen.textContent = "Open: " + data.results[0].o;
+        stockClose.textContent = "Close: " + data.results[0].c;
+        stockName.textContent = data.results[0].T;
         
         }
         else{
-          stockOpen.textContent = "Open: " + data.results[0].o;
-        stockClose.textContent = "Close: " + data.results[0].c;
-        stockName.textContent = data.results[0].T;
+          stockOpen.textContent = "Open: " + data.open;
+          stockClose.textContent = "Close: " + data.close;
+          stockName.textContent = data.symbol + " " + pickedDate;
         }
         
         //Appending the dynamically generated html to the div associated with the id="users"
