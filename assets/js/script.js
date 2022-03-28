@@ -123,14 +123,14 @@ $(document).ready(function () {
         var stockdate = document.createElement("p");
 
         //Setting the text of the h3 element and p element.
-        if(pickedDate != ""){
+        if(pickedDate != null){
           stockOpen.textContent = "Open: " + data.open;
           stockClose.textContent = "Close: " + data.close;
           stockName.textContent = data.symbol + " " + pickedDate;
         
         }
         else{
-          stockOpen.textContent = "Open: " + data.results[0].o;
+        stockOpen.textContent = "Open: " + data.results[0].o;
         stockClose.textContent = "Close: " + data.results[0].c;
         stockName.textContent = data.results[0].T;
         }
