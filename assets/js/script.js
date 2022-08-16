@@ -65,7 +65,7 @@ $(document).ready(function () {
         var requestUrl =
           "https://rest.coinapi.io/v1/exchangerate/" +
           cryptoNames.toUpperCase() +
-          "/USD/?apiKey=76534041-EF29-40D8-AC91-75939BEF8C76";
+          "/USD/?apiKey=C4D62BF3-1B0B-45D4-9A3F-48DC7D801132";
         fetch(requestUrl)
           .then(function (response) {
             return response.json();
@@ -151,7 +151,7 @@ $(document).ready(function () {
     var requestUrl =
       "https://rest.coinapi.io/v1/exchangerate/" +
       cryptoSymbol.toUpperCase() +
-      "/USD/?apiKey=76534041-EF29-40D8-AC91-75939BEF8C76";
+      "/USD/?apiKey=C4D62BF3-1B0B-45D4-9A3F-48DC7D801132";
     localStorage.setItem("storedCrypto", JSON.stringify(""));
     var cryptoNames = JSON.parse(localStorage.getItem("storedCrypto"));
     for (var i = 0; i <= cryptoNames.length; i++) {
