@@ -96,7 +96,9 @@ $(document).ready(function () {
     var stockName = $(this).siblings(".description").val();
     console.log(pickedDate);
     if(pickedDate != ""){
-     var requestUrl = "https://api.polygon.io/v1/open-close/"+stockName.toUpperCase()+"/"+pickedDate+"?adjusted=true&apiKey=x9aOGMvupupwhHuYUerXqh9LBf1gm1HN"
+     var requestUrl = "https://api.polygon.io/v2/aggs/ticker/" +
+      stockName.toUpperCase() +
+      "/prev?adjusted=true&apiKey=x9aOGMvupupwhHuYUerXqh9LBf1gm1HN";
     }
     else{
     var requestUrl =
